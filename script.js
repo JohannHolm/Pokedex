@@ -1,6 +1,6 @@
 let currentPokemon;
 let CARD_LIMIT = []; //[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
-let cardIncrease = 'Wert/CARD_LIMIT push 20 oder so';
+let loadMore;
 const BACKGROUND_COLORS = {
   normal: 'rgb(168, 167, 122, 0.5)',
   fire: 'rgb(238, 129, 48, 0.5)',
@@ -42,7 +42,6 @@ async function init() {
     setBackgroundColor('card-background', i);
     saveResponse(id);
   }
-  //console.log(currentPokemon);
 }
 
 function saveResponse(id) {
@@ -68,6 +67,11 @@ function renderPokemonInfo(id) {
   document.getElementById('pokemon-id').innerHTML = `#${addIdFormat(getJsonFromLocalStorage(id)['id'])} `;
   renderPokemonTypesCard(getJsonFromLocalStorage(id));
   renderAboutPokemon();
+}
+
+function closeCard() {
+  // Die Karte soll beim klicken auf den Body geschlossen werden, alternativ close Button erstellen.
+  document.getElementById('card-box').classList.add('d-none');
 }
 
 function extractIdFromJson(json) {
