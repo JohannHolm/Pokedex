@@ -27,3 +27,4 @@ function returnPokemonAbout() {
 </table>
 `;
 }
+// Pokemon-Typ 'https://pokeapi.co/api/v2/pokemon-species/6/' genera => 7 => genus

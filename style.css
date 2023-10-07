@@ -106,10 +106,20 @@ table {
 #card-content-container {
   margin-right: 10%;
   margin-left: 10%;
+  justify-content: center;
 }
 
 .pokemon-card {
   margin-top: 8px !important;
   margin-right: 8px;
   width: 23% !important;
+  background-image: url('img/pokeball.png');
+  background-position-x: 100px;
+  background-repeat: no-repeat;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
 }
