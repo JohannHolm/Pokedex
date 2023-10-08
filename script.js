@@ -67,6 +67,7 @@ function renderPokemonInfo(id) {
   document.getElementById('pokemon-id').innerHTML = `#${addIdFormat(getJsonFromLocalStorage(id)['id'])} `;
   renderPokemonTypesCard(getJsonFromLocalStorage(id));
   renderAboutPokemon();
+  setBackgroundColorOpenCard(getJsonFromLocalStorage(id), 'main-card');
 }
 
 function closeCard() {
@@ -111,4 +112,9 @@ function renderPokemonTypesCard(json) {
 function setBackgroundColor(card, id) {
   const toptype = currentPokemon['types'][0]['type']['name'];
   document.getElementById(card + id).style.backgroundColor = BACKGROUND_COLORS[toptype];
+}
+
+function setBackgroundColorOpenCard(json, card) {
+  const toptype = json['types'][0]['type']['name'];
+  document.getElementById(card).style.backgroundColor = BACKGROUND_COLORS[toptype];
 }

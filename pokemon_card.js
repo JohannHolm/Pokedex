@@ -1,6 +1,6 @@
 function returnPokemonCard() {
   return `
-<div class="card main-card rounded-5">
+<div class="card main-card rounded-5" id="main-card">
 <div class="card-body">
     <div class="pokemon-card-top-navbar">
         <button class="btn  btn-secondary">Back</button>
