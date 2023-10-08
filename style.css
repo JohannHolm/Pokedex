@@ -26,7 +26,7 @@ body {
 
 .card-box-wrapper {
   width: 100vw;
-  height: 100vw;
+  /*height: 100vw;*/
   position: absolute;
   z-index: 5;
   display: flex;
@@ -131,4 +131,21 @@ table {
   display: flex;
   justify-content: center;
   margin-top: 8px;
+}
+
+#card-box {
+  -webkit-animation-name: OpenCardAnimation;
+  -webkit-animation-duration: 0.2s;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes OpenCardAnimation {
+  from {
+    -webkit-transform: rotate(30deg) scale(0);
+  }
+  to {
+    -webkit-transform: rotate(0deg) scale(1);
+  }
 }
