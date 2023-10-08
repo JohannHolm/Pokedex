@@ -3,7 +3,7 @@ function returnPokemonCard() {
 <div class="card main-card rounded-5" id="main-card">
 <div class="card-body">
     <div class="pokemon-card-top-navbar">
-        <button class="btn  btn-secondary">Back</button>
+        <button onclick="closeCard()" class="btn  btn-secondary">Close</button>
         <button class="btn  btn-secondary">Like</button>
     </div>
     <div class="header-container">

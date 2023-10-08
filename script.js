@@ -2,24 +2,24 @@ let currentPokemon;
 let CARD_LIMIT = []; //[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 let loadMore;
 const BACKGROUND_COLORS = {
-  normal: 'rgb(168, 167, 122, 0.5)',
-  fire: 'rgb(238, 129, 48, 0.5)',
-  water: 'rgb(99, 144, 240, 0.5)',
-  electric: 'rgb(247, 208, 44, 0.5)',
-  grass: 'rgb(122, 199, 76, 0.5)',
-  ice: 'rgb(150, 217, 214, 0.5)',
-  fighting: 'rgb(194, 46, 40, 0.5)',
-  poison: 'rgb(163, 62, 161, 0.5)',
-  ground: 'rgb(226, 191, 101, 0.5)',
-  flying: 'rgb(169, 143, 243, 0.5)',
-  psychic: 'rgb(249, 85, 135, 0.5)',
-  bug: 'rgb(166, 185, 26, 0.5)',
-  rock: 'rgb(182, 161, 54, 0.5)',
-  ghost: 'rgb(115, 87, 151, 0.5)',
-  dragon: 'rgb(111, 53, 252, 0.5)',
-  dark: 'rgb(112, 87, 70, 0.5)',
-  steel: 'rgb(183, 183, 206, 0.5)',
-  fairy: 'rgb(214, 133, 173, 0.5)',
+  normal: 'rgb(168, 167, 122, 1)',
+  fire: 'rgb(238, 129, 48, 1)',
+  water: 'rgb(99, 144, 240, 1)',
+  electric: 'rgb(247, 208, 44, 1)',
+  grass: 'rgb(122, 199, 76, 1)',
+  ice: 'rgb(150, 217, 214, 1)',
+  fighting: 'rgb(194, 46, 40, 1)',
+  poison: 'rgb(163, 62, 161, 1)',
+  ground: 'rgb(226, 191, 101, 1)',
+  flying: 'rgb(169, 143, 243, 1)',
+  psychic: 'rgb(249, 85, 135, 1)',
+  bug: 'rgb(166, 185, 26, 1)',
+  rock: 'rgb(182, 161, 54, 1)',
+  ghost: 'rgb(115, 87, 151, 1)',
+  dragon: 'rgb(111, 53, 252, 1)',
+  dark: 'rgb(112, 87, 70, 1)',
+  steel: 'rgb(183, 183, 206, 1)',
+  fairy: 'rgb(214, 133, 173, 1)',
 };
 
 function calcCardLimit() {
@@ -56,6 +56,7 @@ function getJsonFromLocalStorage(id) {
 //Onclick - große Detail Karte
 function openPokemon(id) {
   document.getElementById('card-box').classList.remove('d-none');
+  document.getElementById('card-box-wrapper').classList.remove('d-none');
   renderPokemonInfo(id);
 }
 
@@ -73,6 +74,7 @@ function renderPokemonInfo(id) {
 function closeCard() {
   // Die Karte soll beim klicken auf den Body geschlossen werden, alternativ close Button erstellen.
   document.getElementById('card-box').classList.add('d-none');
+  document.getElementById('card-box-wrapper').classList.add('d-none');
 }
 
 function extractIdFromJson(json) {
