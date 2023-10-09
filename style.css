@@ -9,7 +9,6 @@ body {
 }
 
 .info-box {
-  min-height: 30vh;
   border-bottom: 0 !important;
   border-left: 0 !important;
   border-right: 0 !important;
