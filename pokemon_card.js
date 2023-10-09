@@ -18,10 +18,10 @@ function returnPokemonCard() {
 <div class="card info-box rounded-5">
     <div class="card-body">
         <div class="card-navbar">
-            <div class="h5 fw-normal" onclick="renderAboutPokemon()">About</div>
-            <div class="h5 fw-normal">Base Stats</div> <!--Template erstellen-->
-            <div class="h5 fw-normal">Evolution</div> <!--Template erstellen-->
-            <div class="h5 fw-normal">Moves</div> <!--Template erstellen-->
+            <div class="h5 fw-normal" onclick="loadAboutPokemonFromLS(${currentPokemonId})">About</div>
+            <div class="h5 fw-normal" onclick="renderBaseStatsHTML(${currentPokemonId})">Base Stats</div> <!--Template erstellen-->
+            <!--<div class="h5 fw-normal">Evolution</div> <!--Template erstellen-->
+            <div class="h5 fw-normal">Moves</div> 
         </div>
         <div id="pokemon-info-box" class="pokmemon-informations">
         </div>

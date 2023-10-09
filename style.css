@@ -134,10 +134,10 @@ table {
 
 #card-box {
   -webkit-animation-name: OpenCardAnimation;
-  -webkit-animation-duration: 0.2s;
+  -webkit-animation-duration: 0.3s;
   -webkit-animation-iteration-count: 1;
   -webkit-animation-timing-function: ease-in-out;
-  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-fill-mode: both;
 }
 
 @-webkit-keyframes OpenCardAnimation {

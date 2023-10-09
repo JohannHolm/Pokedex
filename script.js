@@ -1,7 +1,10 @@
 let currentPokemon;
+let currentPokemonId;
 let currentPokemonDescription;
 let currentPokemonHabitat;
 let currentPokemonBestStat;
+let baseStat = [];
+let baseStatName = [];
 let CARD_LIMIT = []; //[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 let loadMore;
 const BACKGROUND_COLORS = {
@@ -61,6 +64,8 @@ function openPokemon(id) {
   document.getElementById('card-box').classList.remove('d-none');
   document.getElementById('card-box-wrapper').classList.remove('d-none');
   renderPokemonInfoTopSection(id);
+  let currentPokemonJson = getJsonFromLocalStorage(id);
+  currentPokemon = currentPokemonJson;
 }
 
 function renderPokemonInfoTopSection(id) {
@@ -74,6 +79,20 @@ function renderPokemonInfoTopSection(id) {
   setBackgroundColorOpenCard(getJsonFromLocalStorage(id), 'main-card');
 }
 
+//**Render Base Stats**//
+
+function renderBaseStatsHTML() {
+  for (let i = 0; i < currentPokemon['stats'].length; i++) {
+    const stat = currentPokemon['stats'][i]['base_stat'];
+    const name = currentPokemon['stats'][i]['stat']['name'];
+    baseStat = stat;
+    baseStat = name;
+  }
+}
+
+//**Render Base Stats END**//
+
+//**Render About Section**/
 async function renderAboutPokemonHTML(id) {
   document.getElementById('pokemon-info-box').innerHTML = returnPokemonAboutHTML();
   await fetchPokemonCharacter(id);
@@ -85,15 +104,36 @@ async function renderAboutPokemonHTML(id) {
   document.getElementById('pokemon-best-stat').innerHTML = capitalizeFirstLetter(currentPokemonBestStat);
 }
 
+function saveAboutInLS(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+//**Load About Section from LocalStorage for better Perfomance**/
+function loadAboutPokemonFromLS() {
+  document.getElementById('pokemon-info-box').innerHTML = returnPokemonAboutHTML();
+  document.getElementById('pokemon-character').innerHTML = capitalizeFirstLetter(LsAboutToString('description'));
+  document.getElementById('pokemon-height').innerHTML = LsAboutToString('height') + `cm`;
+  document.getElementById('pokemon-weight').innerHTML = LsAboutToString('weight') + `kg`;
+  document.getElementById('pokemon-habitat').innerHTML = capitalizeFirstLetter(LsAboutToString('habitat'));
+  document.getElementById('pokemon-best-stat').innerHTML = capitalizeFirstLetter(LsAboutToString('best_stat'));
+}
+
+function LsAboutToString(key) {
+  let AboutKey = localStorage.getItem(key);
+  return JSON.parse(AboutKey);
+}
+
 function getPokemonHeightFromLS(id) {
   let pokemon = getJsonFromLocalStorage(id);
   let pokemonHeightInCm = pokemon['height'] * 10;
+  saveAboutInLS('height', pokemonHeightInCm);
   return pokemonHeightInCm;
 }
 
 function getPokemonWeightFromLS(id) {
   let pokemon = getJsonFromLocalStorage(id);
   let pokemonWeightInKg = Math.round(pokemon['weight'] / 10); // Hectogram to kg
+  saveAboutInLS('weight', pokemonWeightInKg);
   return pokemonWeightInKg;
 }
 
@@ -103,6 +143,8 @@ async function fetchPokemonCharacter(id) {
   let responseAsJson = await response.json();
   currentPokemonDescription = responseAsJson['descriptions']['7']['description'];
   currentPokemonBestStat = responseAsJson['highest_stat']['name'];
+  saveAboutInLS('best_stat', currentPokemonBestStat);
+  saveAboutInLS('description', currentPokemonDescription);
 }
 
 async function fetchPokemonHabitat(id) {
@@ -110,7 +152,14 @@ async function fetchPokemonHabitat(id) {
   let response = await fetch(url);
   let responseAsJson = await response.json();
   currentPokemonHabitat = responseAsJson['habitat']['name'];
+  saveAboutInLS('habitat', currentPokemonHabitat);
 }
+
+//**Render About Section END**/
+
+//**Render Base Stats**/
+
+//**Render Base Stats END**/
 
 function closeCard() {
   // Die Karte soll beim klicken auf den Body geschlossen werden, alternativ close Button erstellen.
