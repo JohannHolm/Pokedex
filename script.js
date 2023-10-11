@@ -82,12 +82,19 @@ function renderPokemonInfoTopSection(id) {
 //**Render Base Stats**//
 
 function renderBaseStatsHTML() {
+  baseStat = [];
+  baseStatName = [];
   for (let i = 0; i < currentPokemon['stats'].length; i++) {
     const stat = currentPokemon['stats'][i]['base_stat'];
     const name = currentPokemon['stats'][i]['stat']['name'];
-    baseStat = stat;
-    baseStat = name;
+    baseStat.push(stat);
+    baseStatName.push(name);
   }
+  document.getElementById('pokemon-info-box').innerHTML = `
+  <div>
+  <canvas id="myChart"></canvas>
+ </div>`;
+  createChart();
 }
 
 //**Render Base Stats END**//
