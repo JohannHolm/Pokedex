@@ -5,7 +5,8 @@ let currentPokemonHabitat;
 let currentPokemonBestStat;
 let baseStat = [];
 let baseStatName = [];
-let CARD_LIMIT = []; //[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+let baseAbilities = [];
+let CARD_LIMIT = [];
 let loadMore;
 const BACKGROUND_COLORS = {
   normal: 'rgb(168, 167, 122, 1)',
@@ -27,18 +28,35 @@ const BACKGROUND_COLORS = {
   steel: 'rgb(183, 183, 206, 1)',
   fairy: 'rgb(214, 133, 173, 1)',
 };
+let loadingValue = 16;
 
 function calcCardLimit() {
-  for (let i = 1; i <= 16; i++) {
+  for (let i = 1; i <= loadingValue; i++) {
     CARD_LIMIT.push(i);
   }
 }
 
 async function init() {
-  //load first 20. Pokemons
+  //load first xx Pokemons
   calcCardLimit();
   //getJsonFromLocalStorage();
   for (let i = 0; i < CARD_LIMIT.length; i++) {
+    const id = CARD_LIMIT[i];
+    let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+    let response = await fetch(url);
+    currentPokemon = await response.json();
+    document.getElementById('card-content-container').innerHTML += returnContentCard(i, id);
+    renderPokemonTypes('pokemon-type-box', id);
+    setBackgroundColor('card-background', i);
+    saveResponse(id);
+  }
+}
+
+async function loadMorePokemonCards() {
+  // Es sollen nur neue Pokemons gerendert werden. Bestehende weiter beibehalten.
+  calcCardLimit();
+  let indexNewPokemonId = CARD_LIMIT - 16;
+  for (let i = indexNewPokemonId; i < CARD_LIMIT.length; i++) {
     const id = CARD_LIMIT[i];
     let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     let response = await fetch(url);
@@ -86,18 +104,38 @@ function renderBaseStatsHTML() {
   baseStatName = [];
   for (let i = 0; i < currentPokemon['stats'].length; i++) {
     const stat = currentPokemon['stats'][i]['base_stat'];
-    const name = currentPokemon['stats'][i]['stat']['name'];
+    const name = capitalizeFirstLetter(currentPokemon['stats'][i]['stat']['name']);
     baseStat.push(stat);
     baseStatName.push(name);
   }
   document.getElementById('pokemon-info-box').innerHTML = `
   <div>
-  <canvas id="myChart"></canvas>
+  <canvas id="pokemon-stat-chart"></canvas>
  </div>`;
   createChart();
 }
 
 //**Render Base Stats END**//
+
+//**Render Base Abilities**/
+function loadBaseAbilitiesFromLS(id) {
+  baseAbilities = [];
+  document.getElementById('pokemon-info-box').innerHTML = '';
+  for (let i = 0; i < currentPokemon['abilities'].length; i++) {
+    const ability = currentPokemon['abilities'][i]['ability']['name'];
+    baseAbilities.push(capitalizeFirstLetter(ability));
+  }
+  for (let j = 0; j < baseAbilities.length; j++) {
+    const element = baseAbilities[j];
+    document.getElementById('pokemon-info-box').innerHTML += `
+    <div id="pokemon-base-abilities-box">`;
+    document.getElementById('pokemon-base-abilities-box').innerHTML += ` <div class="">${element}</div>
+    </div>
+    `;
+  }
+}
+
+//**Render Base Abilities END**/
 
 //**Render About Section**/
 async function renderAboutPokemonHTML(id) {
@@ -163,10 +201,6 @@ async function fetchPokemonHabitat(id) {
 }
 
 //**Render About Section END**/
-
-//**Render Base Stats**/
-
-//**Render Base Stats END**/
 
 function closeCard() {
   // Die Karte soll beim klicken auf den Body geschlossen werden, alternativ close Button erstellen.

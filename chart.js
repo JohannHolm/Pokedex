@@ -1,6 +1,5 @@
 function createChart() {
-  const ctx = document.getElementById('myChart');
-
+  const ctx = document.getElementById('pokemon-stat-chart');
   new Chart(ctx, {
     type: 'bar',
     data: {

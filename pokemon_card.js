@@ -21,7 +21,7 @@ function returnPokemonCard() {
             <div class="h5 fw-normal" onclick="loadAboutPokemonFromLS(${currentPokemonId})">About</div>
             <div class="h5 fw-normal" onclick="renderBaseStatsHTML(${currentPokemonId})">Base Stats</div> <!--Template erstellen-->
             <!--<div class="h5 fw-normal">Evolution</div> <!--Template erstellen-->
-            <div class="h5 fw-normal">Moves</div> 
+            <div onclick="loadBaseAbilitiesFromLS(${currentPokemonId})" class="h5 fw-normal">Base Abilities</div> 
         </div>
         <div id="pokemon-info-box" class="pokmemon-informations">
         </div>
