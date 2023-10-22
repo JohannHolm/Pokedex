@@ -131,21 +131,24 @@ table {
   justify-content: center;
   margin-top: 8px;
 }
-
-#card-box {
-  -webkit-animation-name: OpenCardAnimation;
-  -webkit-animation-duration: 0.3s;
-  -webkit-animation-iteration-count: 1;
-  -webkit-animation-timing-function: ease-in-out;
-  -webkit-animation-fill-mode: both;
+.footer:hover {
+  cursor: pointer;
 }
 
-@-webkit-keyframes OpenCardAnimation {
+#card-box {
+  animation-name: OpenCardAnimation;
+  animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+}
+
+@keyframes OpenCardAnimation {
   from {
-    -webkit-transform: rotate(30deg) scale(0);
+    transform: translate(0, 0) scale(0);
   }
   to {
-    -webkit-transform: rotate(0deg) scale(1);
+    transform: translate(0) scale(1);
   }
 }
 

@@ -6,8 +6,6 @@ let currentPokemonBestStat;
 let baseStat = [];
 let baseStatName = [];
 let baseAbilities = [];
-let CARD_LIMIT = [];
-let loadMore;
 const BACKGROUND_COLORS = {
   normal: 'rgb(168, 167, 122, 1)',
   fire: 'rgb(238, 129, 48, 1)',
@@ -29,43 +27,37 @@ const BACKGROUND_COLORS = {
   fairy: 'rgb(214, 133, 173, 1)',
 };
 let loadingValue = 16;
-
-function calcCardLimit() {
-  for (let i = 1; i <= loadingValue; i++) {
-    CARD_LIMIT.push(i);
-  }
-}
+let currentPokemonCounter = 0;
 
 async function init() {
-  //load first xx Pokemons
-  calcCardLimit();
   //getJsonFromLocalStorage();
-  for (let i = 0; i < CARD_LIMIT.length; i++) {
-    const id = CARD_LIMIT[i];
+  for (let i = 0; i < loadingValue; i++) {
+    const id = i + 1;
     let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     let response = await fetch(url);
     currentPokemon = await response.json();
     document.getElementById('card-content-container').innerHTML += returnContentCard(i, id);
     renderPokemonTypes('pokemon-type-box', id);
     setBackgroundColor('card-background', i);
-    saveResponse(id);
+    //saveResponse(id);
+    currentPokemonCounter++;
   }
+  loadingValue = 32;
 }
 
-async function loadMorePokemonCards() {
-  // Es sollen nur neue Pokemons gerendert werden. Bestehende weiter beibehalten.
-  calcCardLimit();
-  let indexNewPokemonId = CARD_LIMIT - 16;
-  for (let i = indexNewPokemonId; i < CARD_LIMIT.length; i++) {
-    const id = CARD_LIMIT[i];
+async function loadMorePokemon() {
+  let index = loadingValue - currentPokemonCounter;
+  for (let i = index; i < loadingValue; i++) {
+    const id = i + 1;
     let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
     let response = await fetch(url);
     currentPokemon = await response.json();
     document.getElementById('card-content-container').innerHTML += returnContentCard(i, id);
     renderPokemonTypes('pokemon-type-box', id);
     setBackgroundColor('card-background', i);
-    saveResponse(id);
+    //saveResponse(id);
   }
+  loadingValue += 16;
 }
 
 function saveResponse(id) {
@@ -77,16 +69,25 @@ function getJsonFromLocalStorage(id) {
   return JSON.parse(object);
 }
 
+async function getOpenPokemonInfos(id) {
+  let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+  let response = await fetch(url);
+  let json = await response.json();
+  return json;
+}
+
 //Onclick - große Detail Karte
-function openPokemon(id) {
+async function openPokemon(id) {
+  currentPokemon = await getOpenPokemonInfos(id);
+  saveResponse(id);
   document.getElementById('card-box').classList.remove('d-none');
   document.getElementById('card-box-wrapper').classList.remove('d-none');
-  renderPokemonInfoTopSection(id);
+  await renderPokemonInfoTopSection(id);
   let currentPokemonJson = getJsonFromLocalStorage(id);
   currentPokemon = currentPokemonJson;
 }
 
-function renderPokemonInfoTopSection(id) {
+async function renderPokemonInfoTopSection(id) {
   // große Detail Karte
   document.getElementById('card-box').innerHTML = returnPokemonCard();
   document.getElementById('pokemon-name').innerHTML = capitalizeFirstLetter(getJsonFromLocalStorage(id)['name']);
@@ -94,7 +95,7 @@ function renderPokemonInfoTopSection(id) {
   document.getElementById('pokemon-id').innerHTML = `#${addIdFormat(getJsonFromLocalStorage(id)['id'])} `;
   renderPokemonTypesCard(getJsonFromLocalStorage(id));
   renderAboutPokemonHTML(id);
-  setBackgroundColorOpenCard(getJsonFromLocalStorage(id), 'main-card');
+  await setBackgroundColorOpenCard(getJsonFromLocalStorage(id), 'main-card');
 }
 
 //**Render Base Stats**//
@@ -206,6 +207,7 @@ function closeCard() {
   // Die Karte soll beim klicken auf den Body geschlossen werden, alternativ close Button erstellen.
   document.getElementById('card-box').classList.add('d-none');
   document.getElementById('card-box-wrapper').classList.add('d-none');
+  localStorage.clear();
 }
 
 function extractIdFromJson(json) {
