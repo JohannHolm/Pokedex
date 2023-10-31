@@ -25,8 +25,7 @@ body {
 
 .card-box-wrapper {
   width: 100vw;
-  /*height: 100vw;*/
-  position: absolute;
+  position: fixed;
   z-index: 5;
   display: flex;
   justify-content: center;
@@ -120,7 +119,7 @@ table {
 .pokemon-card {
   margin-top: 8px !important;
   margin-right: 8px;
-  width: 23% !important;
+  width: 250px;
   background-image: url('img/pokeball.png');
   background-position-x: 100px;
   background-repeat: no-repeat;
@@ -157,4 +156,17 @@ table {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 644px) {
+  .pokemon-card {
+    width: 350px;
+  }
 }

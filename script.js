@@ -1,3 +1,11 @@
+/**
+ * TODO:
+ * Ab 31. Pokemon gibt es keine description dafür - das abfangen und none ins dom rendern.
+ *
+ *
+ *
+ * **/
+
 let currentPokemon;
 let currentPokemonId;
 let currentPokemonDescription;
@@ -141,13 +149,13 @@ function loadBaseAbilitiesFromLS(id) {
 //**Render About Section**/
 async function renderAboutPokemonHTML(id) {
   document.getElementById('pokemon-info-box').innerHTML = returnPokemonAboutHTML();
-  await fetchPokemonCharacter(id);
-  await fetchPokemonHabitat(id);
-  document.getElementById('pokemon-character').innerHTML = currentPokemonDescription;
+  //await fetchPokemonCharacter(id);
+  //await fetchPokemonHabitat(id);
+  //document.getElementById('pokemon-character').innerHTML = currentPokemonDescription;
   document.getElementById('pokemon-height').innerHTML = getPokemonHeightFromLS(id) + `cm`;
   document.getElementById('pokemon-weight').innerHTML = getPokemonWeightFromLS(id) + `kg`;
-  document.getElementById('pokemon-habitat').innerHTML = capitalizeFirstLetter(currentPokemonHabitat);
-  document.getElementById('pokemon-best-stat').innerHTML = capitalizeFirstLetter(currentPokemonBestStat);
+  //document.getElementById('pokemon-habitat').innerHTML = capitalizeFirstLetter(currentPokemonHabitat);
+  //document.getElementById('pokemon-best-stat').innerHTML = capitalizeFirstLetter(currentPokemonBestStat);
 }
 
 function saveAboutInLS(key, value) {
@@ -157,11 +165,11 @@ function saveAboutInLS(key, value) {
 //**Load About Section from LocalStorage for better Perfomance**/
 function loadAboutPokemonFromLS() {
   document.getElementById('pokemon-info-box').innerHTML = returnPokemonAboutHTML();
-  document.getElementById('pokemon-character').innerHTML = capitalizeFirstLetter(LsAboutToString('description'));
+  //document.getElementById('pokemon-character').innerHTML = capitalizeFirstLetter(LsAboutToString('description'));
   document.getElementById('pokemon-height').innerHTML = LsAboutToString('height') + `cm`;
   document.getElementById('pokemon-weight').innerHTML = LsAboutToString('weight') + `kg`;
-  document.getElementById('pokemon-habitat').innerHTML = capitalizeFirstLetter(LsAboutToString('habitat'));
-  document.getElementById('pokemon-best-stat').innerHTML = capitalizeFirstLetter(LsAboutToString('best_stat'));
+  //document.getElementById('pokemon-habitat').innerHTML = capitalizeFirstLetter(LsAboutToString('habitat'));
+  //document.getElementById('pokemon-best-stat').innerHTML = capitalizeFirstLetter(LsAboutToString('best_stat'));
 }
 
 function LsAboutToString(key) {
